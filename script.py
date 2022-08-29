@@ -38,7 +38,7 @@ starting_point = input("Enter the loctaion from where you will commence your jou
 final_destination = input("Enter your final destination: ")
 
 #Reporting Time
-reporting_time = '0500'
+reporting_time = '...'
 
 #url to send requests
 url ='https://maps.googleapis.com/maps/api/distancematrix/json?'
@@ -47,8 +47,7 @@ url ='https://maps.googleapis.com/maps/api/distancematrix/json?'
 api_response = requests.get(url + "origins=" + starting_point + "&destinations=" + final_destination + "&key=" + api_key)
 
 
-#fetching time in usual display format and as seconds, we use the seconds for calculation
-#time = api_response.json()["rows"][0]["elements"][0]["duration"]["text"]       
+#fetching time in usual display format and as seconds, we use the seconds for calculation      
 seconds = api_response.json()["rows"][0]["elements"][0]["duration"]["value"]
 print(api_response.json())
 
@@ -58,10 +57,10 @@ current_time = time.strftime("%H%M", current_time)
 
 if(seconds > difference(int(current_time[0:2]), int(current_time[2:]), int(reporting_time[0:2]), int(reporting_time[2:]))):
     #EMail Credentials
-    sender_email = "kausshikmanojkumar@gmail.com"    
-    recipient_email = "kausshik@iastate.edu"       
+    sender_email = "..."    
+    recipient_email = "..."       
     subject = "High Traffic"   
-    message = "Hello Boss,\nSorry, but I can't make it into work today on time.\nThe traffic seems to be very heavy.\nRegards,\nKausshik Manojkumar"
+    message = "Hello Boss,\nSorry, but I can't make it into work today on time.\nThe traffic seems to be very heavy.\nRegards,\n<Your Name>"
 
     #Formatting the EMail
     email = "Subject: {}\n\n{}".format(subject, message)
