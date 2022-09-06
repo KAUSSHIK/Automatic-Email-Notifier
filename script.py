@@ -3,6 +3,17 @@ import requests
 import smtplib
 import time
 from datetime import datetime
+import geocoder
+from geopy.geocoders import Nominatim
+
+#Get the current location using GeoCoder
+curr_loc = geocoder.ip('me')
+curr_loc_lat_long = curr_loc.latlng
+
+#Now we Reverse Geocode the Latitude and Longitude to get the more commonly used loaction address
+geoLoc = Nominatim(user_agent="GetLoc")
+latlong = "{latitude}, {longitude}".format(latitude = curr_loc.latlng[0], longitude = curr_loc.latlng[1])
+location_name = geoLoc.reverse(latlong)
 
 #Calculate Time Difference
 def difference(h1, m1, h2, m2):
@@ -31,8 +42,8 @@ def difference(h1, m1, h2, m2):
 with open ("api_key_storage.txt", "r") as api_file:
     api_key = api_file.read()
 
-#Starting point
-starting_point = input("Enter the loctaion from where you will commence your journey: ")
+#Starting point - we will use the address we generated from before
+starting_point = str(location_name)
 
 #Final Destination
 final_destination = input("Enter your final destination: ")
